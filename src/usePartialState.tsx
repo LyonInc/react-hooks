@@ -25,13 +25,25 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
-import { Lifecycles } from './types';
 
-export default function useLifecycles(lifecycle: Lifecycles): void {
-  React.useEffect(() => {
-    lifecycle.onMount();
+import { useState, Dispatch, SetStateAction } from 'react';
+import useConstantCallback from './useConstantCallback';
 
-    return lifecycle.onUnmount;
-  }, []);
+export default function usePartialState<T extends {}>(
+  initialState: T | (() => T),
+): [T, Dispatch<SetStateAction<Partial<T>>>] {
+  const [state, setState] = useState<T>(initialState);
+
+  const patch = useConstantCallback<Dispatch<SetStateAction<Partial<T>>>>((partialState) => {
+    setState((currentState) => ({
+      ...currentState,
+      ...(
+        typeof partialState === 'function'
+          ? partialState(currentState)
+          : partialState
+      ),
+    }));
+  });
+
+  return [state, patch];
 }

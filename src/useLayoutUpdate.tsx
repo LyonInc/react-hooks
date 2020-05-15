@@ -25,20 +25,23 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import {
+  EffectCallback, DependencyList, useRef, useLayoutEffect,
+} from 'react';
 
 export default function useLayoutUpdate(
-  callback: React.EffectCallback,
-  dependencies?: React.DependencyList,
+  callback: EffectCallback,
+  dependencies?: DependencyList,
 ): void {
-  const initialMount = React.useRef(true);
+  const initialMount = useRef(true);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (initialMount.current) {
       initialMount.current = false;
     } else {
       return callback();
     }
     return undefined;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 }

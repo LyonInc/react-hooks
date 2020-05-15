@@ -25,13 +25,14 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { DependencyList, useRef, useCallback } from 'react';
 import useUnmount from './useUnmount';
 
-export default function useThrottledCallback
-  <T extends((...args: any[]) => void)>(
-  callback: T, timeout = 150, deps?: React.DependencyList): T {
-  const timer = React.useRef<number | undefined>();
+export default function useThrottledCallback<T extends((...args: any[]) => void)>(
+  callback: T,
+  timeout = 150,
+  deps?: DependencyList): T {
+  const timer = useRef<number | undefined>();
 
   useUnmount(() => {
     if (timer.current) {
@@ -39,9 +40,9 @@ export default function useThrottledCallback
     }
   });
 
-  const wrapped = React.useCallback(callback, deps || [{}]);
+  const wrapped = useCallback(callback, deps || [{}]);
 
-  return React.useCallback<T>(((...args) => {
+  return useCallback<T>(((...args) => {
     if (!timer.current) {
       callback(...args);
 

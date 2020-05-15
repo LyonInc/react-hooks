@@ -25,8 +25,8 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { EffectCallback, useEffect } from 'react';
 
-export default function useEffectOnce(effect: React.EffectCallback): void {
-  React.useEffect(effect, []);
+export default function useEffectOnce(effect: EffectCallback): void {
+  useEffect(effect, []);
 }

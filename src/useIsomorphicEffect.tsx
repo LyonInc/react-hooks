@@ -25,10 +25,10 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 const useIsomorphicEffect = typeof window === 'undefined'
-  ? React.useEffect
-  : React.useLayoutEffect;
+  ? useEffect
+  : useLayoutEffect;
 
 export default useIsomorphicEffect;

@@ -25,24 +25,16 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import { useRef } from 'react';
 
-interface Constant<T> {
+interface Value<T> {
   value: T;
 }
 
-/**
- * Hook for producing memoized value that
- * is component-level constant.
- *
- * @category Hooks
- * @param supplier
- * @typeparam type of the value
- */
 export default function useConstant<T>(supplier: () => T): T {
-  const ref = React.useRef<Constant<T> | undefined>();
+  const ref = useRef<Value<T> | undefined>();
 
-  if (!ref.current) {
+  if (ref.current == null) {
     ref.current = {
       value: supplier(),
     };

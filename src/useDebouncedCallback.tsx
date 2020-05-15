@@ -25,16 +25,17 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { DependencyList, useRef, useCallback } from 'react';
 import useUnmount from './useUnmount';
 
-export default function useDebouncedCallback
-  <T extends((...args: any[]) => void)>(
-  callback: T, timeout = 150, deps?: React.DependencyList): T {
+export default function useDebouncedCallback<T extends((...args: any[]) => void)>(
+  callback: T,
+  timeout = 150,
+  deps?: DependencyList): T {
   /**
    * Reference for the timer schedule
    */
-  const timer = React.useRef<number | undefined>();
+  const timer = useRef<number | undefined>();
 
   /**
    * Cleanup logic
@@ -48,12 +49,12 @@ export default function useDebouncedCallback
   /**
    * Wrap a callback
    */
-  const wrapped = React.useCallback(callback, deps || [{}]);
+  const wrapped = useCallback(callback, deps || [{}]);
 
   /**
    * Return the memoized callback
    */
-  return React.useCallback<T>(((...args) => {
+  return useCallback<T>(((...args) => {
     /**
      * Clear the timeout when called
      */

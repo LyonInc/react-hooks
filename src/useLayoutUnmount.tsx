@@ -25,8 +25,9 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useLayoutEffect } from 'react';
 
 export default function useLayoutEffectOnce(cleanup: () => void): void {
-  React.useLayoutEffect(() => cleanup, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => cleanup, []);
 }

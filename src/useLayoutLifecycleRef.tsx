@@ -25,12 +25,12 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { MutableRefObject, useRef, useLayoutEffect } from 'react';
 
-export default function useLayoutLifecycleRef(): React.MutableRefObject<boolean> {
-  const ref = React.useRef(false);
+export default function useLayoutLifecycleRef(): MutableRefObject<boolean> {
+  const ref = useRef(false);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     ref.current = true;
 
     return (): void => {

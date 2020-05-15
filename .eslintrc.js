@@ -32,6 +32,14 @@ module.exports = {
     'react',
     '@typescript-eslint',
   ],
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "import/extensions": [
@@ -45,6 +53,5 @@ module.exports = {
       }
     ],
     "import/no-unresolved": "error",
-    "react-hooks/exhaustive-deps": "off",
   },
 };

@@ -25,19 +25,19 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import {
+  Reducer, Dispatch, useReducer, useRef, useCallback,
+} from 'react';
 import useUnmount from './useUnmount';
 
-type StateTuple<S, A> = [S, React.Dispatch<A>];
-
 export default function useDebouncedReducer<S, A>(
-  reducer: React.Reducer<S, A>,
+  reducer: Reducer<S, A>,
   timeout = 150,
   initialState: S,
-): StateTuple<S, A> {
-  const [state, setState] = React.useReducer(reducer, initialState);
+): [S, Dispatch<A>] {
+  const [state, setState] = useReducer(reducer, initialState);
 
-  const timer = React.useRef<number | undefined>();
+  const timer = useRef<number | undefined>();
 
   useUnmount(() => {
     if (timer.current) {
@@ -45,7 +45,7 @@ export default function useDebouncedReducer<S, A>(
     }
   });
 
-  const set = React.useCallback<React.Dispatch<A>>((value) => {
+  const set = useCallback<Dispatch<A>>((value) => {
     if (timer.current) {
       window.clearTimeout(timer.current);
     }

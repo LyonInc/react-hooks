@@ -25,7 +25,34 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-export interface Lifecycles {
-  onMount: () => void;
-  onUnmount: () => void;
+import {
+  useState, Dispatch, SetStateAction, useRef, useCallback,
+} from 'react';
+import useUnmount from './useUnmount';
+
+export default function useThrottledState<T>(
+  initialState: T | (() => T),
+  timeout = 150,
+): [T, Dispatch<SetStateAction<T>>] {
+  const [state, setState] = useState<T>(initialState);
+
+  const timer = useRef<number | undefined>();
+
+  useUnmount(() => {
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+    }
+  });
+
+  const set = useCallback<Dispatch<SetStateAction<T>>>((value) => {
+    if (!timer.current) {
+      setState(value);
+
+      timer.current = window.setTimeout(() => {
+        timer.current = undefined;
+      }, timeout);
+    }
+  }, [timeout]);
+
+  return [state, set];
 }

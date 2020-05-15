@@ -25,14 +25,14 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import { EffectCallback, DependencyList, useRef } from 'react';
 import useIsomorphicEffect from './useIsomorphicEffect';
 
 export default function useIsomorphicUpdate(
-  callback: React.EffectCallback,
-  dependencies?: React.DependencyList,
+  callback: EffectCallback,
+  dependencies?: DependencyList,
 ): void {
-  const initialMount = React.useRef(true);
+  const initialMount = useRef(true);
 
   useIsomorphicEffect(() => {
     if (initialMount.current) {

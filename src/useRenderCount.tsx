@@ -25,10 +25,10 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import { useRef } from 'react';
 
 export default function useRenderCount(): number {
-  const ref = React.useRef(0);
+  const ref = useRef(0);
 
   ref.current += 1;
 

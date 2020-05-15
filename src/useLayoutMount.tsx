@@ -25,8 +25,8 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useLayoutEffect } from 'react';
 
 export default function useLayoutMount(callback: () => void): void {
-  React.useLayoutEffect(callback, []);
+  useLayoutEffect(callback, []);
 }

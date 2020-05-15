@@ -25,9 +25,9 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { EffectCallback } from 'react';
 import useIsomorphicEffect from './useIsomorphicEffect';
 
-export default function useIsomorphicEffectOnce(effect: React.EffectCallback): void {
+export default function useIsomorphicEffectOnce(effect: EffectCallback): void {
   useIsomorphicEffect(effect, []);
 }

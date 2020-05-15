@@ -25,12 +25,12 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useRef, useEffect, MutableRefObject } from 'react';
 
-export default function useLifecycleRef(): React.MutableRefObject<boolean> {
-  const ref = React.useRef(false);
+export default function useLifecycleRef(): MutableRefObject<boolean> {
+  const ref = useRef(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     ref.current = true;
 
     return (): void => {

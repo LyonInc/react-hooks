@@ -25,7 +25,7 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import { useMemo, useRef } from 'react';
 import useUnmount from './useUnmount';
 
 type Cleanup = (() => void | undefined) | void;
@@ -34,14 +34,15 @@ export default function useSyncEffect(
   effect: React.EffectCallback,
   deps?: React.DependencyList,
 ): void {
-  const cleanup = React.useRef<Cleanup>();
+  const cleanup = useRef<Cleanup>();
 
-  React.useMemo(() => {
+  useMemo(() => {
     if (cleanup.current) {
       cleanup.current();
     }
 
     cleanup.current = effect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   useUnmount(() => {

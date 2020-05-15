@@ -25,13 +25,35 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
-import { Lifecycles } from './types';
+import {
+  Reducer, Dispatch, useReducer, useRef, useCallback,
+} from 'react';
+import useUnmount from './useUnmount';
 
-export default function useLayoutLifecycles(lifecycle: Lifecycles): void {
-  React.useLayoutEffect(() => {
-    lifecycle.onMount();
+export default function useDebouncedReducer<S, A>(
+  reducer: Reducer<S, A>,
+  timeout = 150,
+  initialState: S,
+): [S, Dispatch<A>] {
+  const [state, setState] = useReducer(reducer, initialState);
 
-    return lifecycle.onUnmount;
-  }, []);
+  const timer = useRef<number | undefined>();
+
+  useUnmount(() => {
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+    }
+  });
+
+  const set = useCallback<Dispatch<A>>((value) => {
+    if (!timer.current) {
+      setState(value);
+
+      timer.current = window.setTimeout(() => {
+        timer.current = undefined;
+      }, timeout);
+    }
+  }, [timeout]);
+
+  return [state, set];
 }

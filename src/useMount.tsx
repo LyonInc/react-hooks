@@ -25,8 +25,8 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useEffect } from 'react';
 
 export default function useMount(callback: () => void): void {
-  React.useEffect(callback, []);
+  useEffect(callback, []);
 }

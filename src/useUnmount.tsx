@@ -25,8 +25,9 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import React from 'react';
+import { useEffect } from 'react';
 
 export default function useUnmount(cleanup: () => void): void {
-  React.useEffect(() => cleanup, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => cleanup, []);
 }

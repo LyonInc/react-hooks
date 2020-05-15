@@ -25,20 +25,18 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import * as React from 'react';
+import {
+  useState, Dispatch, SetStateAction, useRef, useCallback,
+} from 'react';
 import useUnmount from './useUnmount';
 
-type StateSupplier<T> = T | (() => T);
-
-type StateTuple<T> = [T, React.Dispatch<React.SetStateAction<T>>];
-
 export default function useDebouncedState<T>(
-  initialState: StateSupplier<T>,
+  initialState: T | (() => T),
   timeout = 150,
-): StateTuple<T> {
-  const [state, setState] = React.useState<T>(initialState);
+): [T, Dispatch<SetStateAction<T>>] {
+  const [state, setState] = useState<T>(initialState);
 
-  const timer = React.useRef<number | undefined>();
+  const timer = useRef<number | undefined>();
 
   useUnmount(() => {
     if (timer.current) {
@@ -46,7 +44,7 @@ export default function useDebouncedState<T>(
     }
   });
 
-  const set = React.useCallback<React.Dispatch<React.SetStateAction<T>>>((value) => {
+  const set = useCallback<Dispatch<SetStateAction<T>>>((value) => {
     if (timer.current) {
       window.clearTimeout(timer.current);
     }
