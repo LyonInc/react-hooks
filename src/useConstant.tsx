@@ -31,14 +31,25 @@ interface Value<T> {
   value: T;
 }
 
+/**
+ * Creates a component-level constant value.
+ * @param supplier A function that supplies the value.
+ */
 export default function useConstant<T>(supplier: () => T): T {
+  /**
+   * Create a reference that will retain the value
+   * for the whole life
+   */
   const ref = useRef<Value<T> | undefined>();
 
+  // Check if the reference doesn't have a value.
   if (ref.current == null) {
+    // Set the value of the reference by calling the supplier
     ref.current = {
       value: supplier(),
     };
   }
 
+  // Return the retained value
   return ref.current.value;
 }

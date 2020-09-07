@@ -28,46 +28,44 @@
 import { DependencyList, useRef, useCallback } from 'react';
 import useUnmount from './useUnmount';
 
+/**
+ * Transforms a given callback into a debounced callback
+ * with the given timeout.
+ *
+ * @param callback The callback to transform with.
+ * @param timeout The amount of time to debounce the callback.
+ * @param deps optional. Recomputes the debounced callback reference
+ * when the dependencies changes (this also includes the timeout)
+ */
 export default function useDebouncedCallback<T extends((...args: any[]) => void)>(
   callback: T,
   timeout = 150,
   deps?: DependencyList): T {
-  /**
-   * Reference for the timer schedule
-   */
+  // Create a timer reference
   const timer = useRef<number | undefined>();
 
-  /**
-   * Cleanup logic
-   */
+  // Once the component unmount, prevent the callback on going through
   useUnmount(() => {
     if (timer.current) {
       window.clearTimeout(timer.current);
     }
   });
 
-  /**
-   * Wrap a callback
-   */
+  // Memoize the callback with the given reference
   const wrapped = useCallback(callback, deps || [{}]);
 
-  /**
-   * Return the memoized callback
-   */
+  // Create the debounce callback reference
   return useCallback<T>(((...args) => {
-    /**
-     * Clear the timeout when called
-     */
+    // If there is a debounce schedule, clear the reference
     if (timer.current) {
       window.clearTimeout(timer.current);
     }
 
-    /**
-     * Reschedule
-     */
+    // Reschedule the debounce callback
     timer.current = window.setTimeout(() => {
+      // Run the callback
       wrapped(...args);
-
+      // Finish the schedule by clearing the timer reference
       timer.current = undefined;
     }, timeout);
   }) as T, [timeout, wrapped]);

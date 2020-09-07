@@ -30,6 +30,11 @@ import {
 } from 'react';
 import useUnmount from './useUnmount';
 
+/**
+ * Creates a state with a debounced dispatch action.
+ * @param initialState
+ * @param timeout
+ */
 export default function useDebouncedState<T>(
   initialState: T | (() => T),
   timeout = 150,

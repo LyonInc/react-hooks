@@ -27,7 +27,11 @@
  */
 import useConstant from './useConstant';
 
-
+/**
+ * Creates a component-level function reference
+ * @param callback callback to retain the reference with.
+ */
 export default function useConstantCallback<T extends((...args: any[]) => any)>(callback: T): T {
+  // We can use the useConstant hook to memoize the callback reference
   return useConstant<T>(() => callback);
 }

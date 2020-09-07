@@ -30,13 +30,21 @@ import {
 } from 'react';
 import useUnmount from './useUnmount';
 
+/**
+ * Creates a reducer with a debounced dispatch action.
+ * @param reducer
+ * @param timeout
+ * @param initialState
+ */
 export default function useDebouncedReducer<S, A>(
   reducer: Reducer<S, A>,
   timeout = 150,
   initialState: S,
 ): [S, Dispatch<A>] {
+  // Create a reducer
   const [state, setState] = useReducer(reducer, initialState);
 
+  // Create a timer reference
   const timer = useRef<number | undefined>();
 
   useUnmount(() => {
