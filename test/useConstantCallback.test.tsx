@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useConstantCallback from '../src/useConstantCallback';
 
-describe('useConstant', () => {
+describe('useConstantCallback', () => {
   it('should retain the same reference after component re-rendering.', () => {
     interface Example {
       value: () => number[];
