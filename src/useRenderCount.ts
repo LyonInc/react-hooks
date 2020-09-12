@@ -27,6 +27,9 @@
  */
 import { useRef } from 'react';
 
+/**
+ * Tracks the number of times the component has rendered.
+ */
 export default function useRenderCount(): number {
   const ref = useRef(0);
 
