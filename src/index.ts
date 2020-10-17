@@ -25,9 +25,14 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
+export { default as useCallbackCondition } from './useCallbackCondition';
 export { default as useConstant } from './useConstant';
 export { default as useConstantCallback } from './useConstantCallback';
 export { default as useForceUpdate } from './useForceUpdate';
+export { default as useFreshLazyRef } from './useFreshLazyRef';
+export { default as useFreshState } from './useFreshState';
 export { default as useIsomorphicEffect } from './useIsomorphicEffect';
-export { default as useRefSupplier } from './useLazyRef';
+export { default as useLazyRef } from './useLazyRef';
+export { default as useMemoCondition } from './useRenderCount';
+export { default as useMountedState } from './useRenderCount';
 export { default as useRenderCount } from './useRenderCount';
