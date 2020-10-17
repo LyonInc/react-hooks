@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Alexis Munsayac
+ * Copyright (c) 2020 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,8 +22,8 @@
  * SOFTWARE.
  *
  *
- * @author Alexis Munsayac <alexis.munsayac@gmail.com>
- * @copyright Alexis Munsayac 2020
+ * @author Lyon Software Technologies, Inc.
+ * @copyright Lyon Software Technologies, Inc. 2020
  */
 import { useState } from 'react';
 import useConstantCallback from './useConstantCallback';

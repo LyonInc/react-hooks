@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Alexis Munsayac
+ * Copyright (c) 2020 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,13 +22,25 @@
  * SOFTWARE.
  *
  *
- * @author Alexis Munsayac <alexis.munsayac@gmail.com>
- * @copyright Alexis Munsayac 2020
+ * @author Lyon Software Technologies, Inc.
+ * @copyright Lyon Software Technologies, Inc. 2020
  */
+
 import { useEffect, useLayoutEffect } from 'react';
 
-const useIsomorphicEffect = typeof window === 'undefined'
-  ? useEffect
-  : useLayoutEffect;
+// React currently throws a warning when using useLayoutEffect on the server.
+// To get around it, we can conditionally useEffect on the server (no-op) and
+// useLayoutEffect in the browser. We need useLayoutEffect to ensure the store
+// subscription callback always has the selector from the latest render commit
+// available, otherwise a store update may happen between render and the effect,
+// which may cause missed updates; we also must ensure the store subscription
+// is created synchronously, otherwise a store update may occur before the
+// subscription is created and an inconsistent state may be observed
+
+export const useIsomorphicEffect = typeof window !== 'undefined'
+  && typeof window.document !== 'undefined'
+  && typeof window.document.createElement !== 'undefined'
+  ? useLayoutEffect
+  : useEffect;
 
 export default useIsomorphicEffect;

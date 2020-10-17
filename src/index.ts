@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Alexis Munsayac
+ * Copyright (c) 2020 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,12 +22,12 @@
  * SOFTWARE.
  *
  *
- * @author Alexis Munsayac <alexis.munsayac@gmail.com>
- * @copyright Alexis Munsayac 2020
+ * @author Lyon Software Technologies, Inc.
+ * @copyright Lyon Software Technologies, Inc. 2020
  */
 export { default as useConstant } from './useConstant';
 export { default as useConstantCallback } from './useConstantCallback';
 export { default as useForceUpdate } from './useForceUpdate';
 export { default as useIsomorphicEffect } from './useIsomorphicEffect';
-export { default as useRefSupplier } from './useRefSupplier';
+export { default as useRefSupplier } from './useLazyRef';
 export { default as useRenderCount } from './useRenderCount';
