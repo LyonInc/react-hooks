@@ -25,18 +25,11 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { useState } from 'react';
-import useConstantCallback from './useConstantCallback';
+import { useReducer } from 'react';
 
 /**
  * Returns a callback that force updates the component.
  */
 export default function useForceUpdate(): () => void {
-  const [, setState] = useState(false);
-
-  const update = useConstantCallback(() => {
-    setState((flag) => !flag);
-  });
-
-  return update;
+  return useReducer(() => ({}), () => ({}))[1];
 }
