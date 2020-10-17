@@ -37,7 +37,7 @@ import { useEffect, useLayoutEffect } from 'react';
 // is created synchronously, otherwise a store update may occur before the
 // subscription is created and an inconsistent state may be observed
 
-export const useIsomorphicEffect = typeof window !== 'undefined'
+const useIsomorphicEffect = typeof window !== 'undefined'
   && typeof window.document !== 'undefined'
   && typeof window.document.createElement !== 'undefined'
   ? useLayoutEffect
