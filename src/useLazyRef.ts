@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Alexis Munsayac
+ * Copyright (c) 2020 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,19 +22,24 @@
  * SOFTWARE.
  *
  *
- * @author Alexis Munsayac <alexis.munsayac@gmail.com>
- * @copyright Alexis Munsayac 2020
+ * @author Lyon Software Technologies, Inc.
+ * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { MutableRefObject } from 'react';
-import useConstant from './useConstant';
+import { MutableRefObject, useRef } from 'react';
 
 /**
  * a variant of `useRef` that accepts an initializer function instead of
  * the actual initial value.
  * @param supplier A function that supplies the initial state
  */
-export default function useRefSupplier<T>(supplier: () => T): MutableRefObject<T> {
-  return useConstant(() => ({
-    current: supplier(),
-  }));
+export default function useLazyRef<T>(supplier: () => T): MutableRefObject<T> {
+  const ref = useRef<MutableRefObject<T> | null>();
+
+  if (!ref.current) {
+    ref.current = {
+      current: supplier(),
+    };
+  }
+
+  return ref.current;
 }
