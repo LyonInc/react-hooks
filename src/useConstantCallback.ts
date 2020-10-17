@@ -31,6 +31,6 @@ import useConstant from './useConstant';
  * Creates a component-level constant function reference
  * @param cb a function reference that will be memoized
  */
-export default function useConstantCallback<T extends((...args: unknown[]) => unknown)>(cb: T): T {
+export default function useConstantCallback<T extends((...args: any[]) => any)>(cb: T): T {
   return useConstant(() => cb);
 }
