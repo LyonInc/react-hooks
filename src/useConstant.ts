@@ -25,8 +25,11 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
+import { useDebugValue } from 'react';
 import useLazyRef from './useLazyRef';
 
 export default function useConstant<T>(supplier: () => T): T {
-  return useLazyRef(supplier).current;
+  const { current } = useLazyRef(supplier);
+  useDebugValue(current);
+  return current;
 }

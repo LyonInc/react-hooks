@@ -25,6 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
+import { useDebugValue } from 'react';
 import useFreshLazyRef, { defaultCompare, MemoCompare } from './useFreshLazyRef';
 
 export default function useMemoCondition<T, R>(
@@ -32,9 +33,13 @@ export default function useMemoCondition<T, R>(
   dependency: R,
   shouldUpdate: MemoCompare<R> = defaultCompare,
 ): T {
-  return useFreshLazyRef(
+  const value = useFreshLazyRef(
     supplier,
     dependency,
     shouldUpdate,
   ).current;
+
+  useDebugValue(value);
+
+  return value;
 }

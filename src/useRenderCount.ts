@@ -25,7 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { useRef } from 'react';
+import { useDebugValue, useRef } from 'react';
 
 /**
  * Tracks the number of times the component has rendered.
@@ -34,6 +34,8 @@ export default function useRenderCount(): number {
   const ref = useRef(0);
 
   ref.current += 1;
+
+  useDebugValue(ref.current);
 
   return ref.current;
 }

@@ -25,7 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useDebugValue, useRef } from 'react';
 
 /**
  * a variant of `useRef` that accepts an initializer function instead of
@@ -40,6 +40,8 @@ export default function useLazyRef<T>(supplier: () => T): MutableRefObject<T> {
       current: supplier(),
     };
   }
+
+  useDebugValue(ref.current);
 
   return ref.current;
 }
