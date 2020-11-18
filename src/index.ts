@@ -36,3 +36,4 @@ export { default as useLazyRef } from './useLazyRef';
 export { default as useMemoCondition } from './useRenderCount';
 export { default as useMountedState } from './useRenderCount';
 export { default as useRenderCount } from './useRenderCount';
+export { default as useSubscription } from './useSubscription';
