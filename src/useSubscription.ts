@@ -22,7 +22,7 @@
  * SOFTWARE.
  *
  *
- * @author Lyon Software Technologies, Inc. 
+ * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
 import { useDebugValue } from 'react';
@@ -31,7 +31,8 @@ import useFreshState from './useFreshState';
 import useIsomorphicEffect from './useIsomorphicEffect';
 
 type ReadSource<T> = () => T;
-type Subscribe = (callback: () => void) => () => void;
+type Unsubscribe = (() => void) | undefined;
+type Subscribe = (callback: () => void) => Unsubscribe;
 
 export interface Subscription<T> {
   read: ReadSource<T>;
@@ -82,7 +83,9 @@ export default function useSubscription<T>({
 
     return () => {
       mounted = false;
-      unsubscribe();
+      if (unsubscribe) {
+        unsubscribe();
+      }
     };
   }, [read, subscribe, shouldUpdate]);
 
