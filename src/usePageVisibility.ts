@@ -22,24 +22,33 @@
  * SOFTWARE.
  *
  *
- * @author Lyon Software Technologies, Inc. 
+ * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
 
 import { useDebugValue } from 'react';
 import useSubscription, { Subscription } from './useSubscription';
+import IS_CLIENT from './utils/is-client';
 
 const SUBSCRIPTION: Subscription<boolean> = {
-  read: () => document.visibilityState === 'visible',
+  read: () => {
+    if (IS_CLIENT) {
+      return document.visibilityState === 'visible';
+    }
+    return true;
+  },
   subscribe: (callback) => {
-    document.addEventListener('visibilitychange', callback, false);
-    return () => {
-      document.removeEventListener('visibilitychange', callback, false);
-    };
+    if (IS_CLIENT) {
+      document.addEventListener('visibilitychange', callback, false);
+      return () => {
+        document.removeEventListener('visibilitychange', callback, false);
+      };
+    }
+    return undefined;
   },
 };
 
-export default function usePageVisibility() {
+export default function usePageVisibility(): boolean {
   const value = useSubscription(SUBSCRIPTION);
 
   useDebugValue(value);

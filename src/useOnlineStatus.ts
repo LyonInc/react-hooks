@@ -22,26 +22,35 @@
  * SOFTWARE.
  *
  *
- * @author Lyon Software Technologies, Inc. 
+ * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
 
 import { useDebugValue } from 'react';
 import useSubscription, { Subscription } from './useSubscription';
+import IS_CLIENT from './utils/is-client';
 
 const SUBSCRIPTION: Subscription<boolean> = {
-  read: () => navigator.onLine,
+  read: () => {
+    if (IS_CLIENT) {
+      return navigator.onLine;
+    }
+    return true;
+  },
   subscribe: (callback) => {
-    window.addEventListener('online', callback, false);
-    window.addEventListener('offline', callback, false);
-    return () => {
-      window.removeEventListener('online', callback, false);
-      window.removeEventListener('offline', callback, false);
-    };
+    if (IS_CLIENT) {
+      window.addEventListener('online', callback, false);
+      window.addEventListener('offline', callback, false);
+      return () => {
+        window.removeEventListener('online', callback, false);
+        window.removeEventListener('offline', callback, false);
+      };
+    }
+    return undefined;
   },
 };
 
-export default function useOnlineStatus() {
+export default function useOnlineStatus(): boolean {
   const value = useSubscription(SUBSCRIPTION);
 
   useDebugValue(value);
