@@ -25,19 +25,45 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-export { default as useCallbackCondition } from './useCallbackCondition';
-export { default as useConstant } from './useConstant';
-export { default as useConstantCallback } from './useConstantCallback';
-export { default as useForceUpdate } from './useForceUpdate';
-export { default as useFreshLazyRef } from './useFreshLazyRef';
-export { default as useFreshState } from './useFreshState';
-export { default as useIsomorphicEffect } from './useIsomorphicEffect';
-export { default as useLazyRef } from './useLazyRef';
-export { default as useMemoCondition } from './useMemoCondition';
-export { default as useMountedState } from './useMountedState';
-export { default as useOnlineStatus } from './useOnlineStatus';
-export { default as usePageVisibility } from './usePageVisibility';
-export { default as useRenderCount } from './useRenderCount';
-export { default as useSubscription } from './useSubscription';
-export { default as useWindowScroll } from './useWindowScroll';
-export { default as useWindowSize } from './useWindowSize';
+
+import { useDebugValue } from 'react';
+import useSubscription, { Subscription } from './useSubscription';
+import IS_CLIENT from './utils/is-client';
+
+export interface WindowScroll {
+  x: number;
+  y: number;
+}
+
+const SUBSCRIPTION: Subscription<WindowScroll | undefined> = {
+  read: () => {
+    if (IS_CLIENT) {
+      return {
+        x: window.pageXOffset,
+        y: window.pageYOffset,
+      };
+    }
+    return undefined;
+  },
+  subscribe: (callback) => {
+    if (IS_CLIENT) {
+      window.addEventListener('scroll', callback, {
+        capture: false,
+        passive: true,
+      });
+
+      return () => {
+        window.removeEventListener('scroll', callback);
+      };
+    }
+    return undefined;
+  },
+};
+
+export default function useWindowScroll(): WindowScroll | undefined {
+  const value = useSubscription(SUBSCRIPTION);
+
+  useDebugValue(value);
+
+  return value;
+}
