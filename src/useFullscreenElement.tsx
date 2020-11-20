@@ -25,20 +25,40 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-export { default as useCallbackCondition } from './useCallbackCondition';
-export { default as useConstant } from './useConstant';
-export { default as useConstantCallback } from './useConstantCallback';
-export { default as useForceUpdate } from './useForceUpdate';
-export { default as useFreshLazyRef } from './useFreshLazyRef';
-export { default as useFreshState } from './useFreshState';
-export { default as useFullscreenElement } from './useFullscreenElement';
-export { default as useIsomorphicEffect } from './useIsomorphicEffect';
-export { default as useLazyRef } from './useLazyRef';
-export { default as useMemoCondition } from './useMemoCondition';
-export { default as useMountedState } from './useMountedState';
-export { default as useOnlineStatus } from './useOnlineStatus';
-export { default as usePageVisibility } from './usePageVisibility';
-export { default as useRenderCount } from './useRenderCount';
-export { default as useSubscription } from './useSubscription';
-export { default as useWindowScroll } from './useWindowScroll';
-export { default as useWindowSize } from './useWindowSize';
+
+import { useDebugValue } from 'react';
+import useSubscription, { Subscription } from './useSubscription';
+import IS_CLIENT from './utils/is-client';
+
+export interface FullscreenElement {
+  element: Element;
+}
+
+const SUBSCRIPTION: Subscription<FullscreenElement | undefined> = {
+  read: () => {
+    if (IS_CLIENT && document.fullscreenElement) {
+      return {
+        element: document.fullscreenElement,
+      };
+    }
+    return undefined;
+  },
+  subscribe: (callback) => {
+    if (IS_CLIENT) {
+      document.addEventListener('fullscreenchange', callback);
+
+      return () => {
+        document.removeEventListener('fullscreenchange', callback);
+      };
+    }
+    return undefined;
+  },
+};
+
+export default function useWindowScroll(): FullscreenElement | undefined {
+  const value = useSubscription(SUBSCRIPTION);
+
+  useDebugValue(value);
+
+  return value;
+}
