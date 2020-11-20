@@ -25,47 +25,8 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { useDebugValue } from 'react';
-import useMemoCondition from './useMemoCondition';
-import useSubscription from './useSubscription';
-import IS_CLIENT from './utils/is-client';
+import useMediaQuery from './useMediaQuery';
 
-const MEDIA = new Map<string, MediaQueryList>();
-
-function getMediaMatcher(query: string): MediaQueryList {
-  const media = MEDIA.get(query);
-  if (media) {
-    return media;
-  }
-  const newMedia = window.matchMedia(query);
-  MEDIA.set(query, newMedia);
-  return newMedia;
-}
-
-export default function useMediaQuery(query: string): boolean {
-  const media = useMemoCondition(() => {
-    if (IS_CLIENT) {
-      return getMediaMatcher(query);
-    }
-    return undefined;
-  }, query);
-
-  const subscription = useMemoCondition(() => ({
-    read: () => !!media?.matches,
-    subscribe: (callback: () => void) => {
-      if (media) {
-        media.addEventListener('change', callback);
-        return () => {
-          media.removeEventListener('change', callback);
-        };
-      }
-      return undefined;
-    },
-  }), media);
-
-  const value = useSubscription(subscription);
-
-  useDebugValue(value);
-
-  return value;
+export default function usePrefersDarkTheme(): boolean {
+  return useMediaQuery('(prefers-color-scheme: dark)');
 }
