@@ -27,6 +27,7 @@
  */
 
 import { useEffect, useLayoutEffect } from 'react';
+import IS_CLIENT from './utils/is-client';
 
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and
@@ -37,9 +38,7 @@ import { useEffect, useLayoutEffect } from 'react';
 // is created synchronously, otherwise a store update may occur before the
 // subscription is created and an inconsistent state may be observed
 
-const useIsomorphicEffect = typeof window !== 'undefined'
-  && typeof window.document !== 'undefined'
-  && typeof window.document.createElement !== 'undefined'
+const useIsomorphicEffect = IS_CLIENT
   ? useLayoutEffect
   : useEffect;
 
