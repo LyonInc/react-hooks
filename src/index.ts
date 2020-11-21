@@ -39,6 +39,7 @@ export { default as useMemoCondition } from './useMemoCondition';
 export { default as useMountedState } from './useMountedState';
 export { default as useOnlineStatus } from './useOnlineStatus';
 export { default as usePageVisibility } from './usePageVisibility';
+export { default as usePartialState } from './usePartialState';
 export { default as usePrefersDarkTheme } from './usePrefersDarkTheme';
 export { default as usePrefersLightTheme } from './usePrefersLightTheme';
 export { default as usePrefersReducedMotion } from './usePrefersReducedMotion';
