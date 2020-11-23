@@ -30,16 +30,10 @@ import { useDebugValue } from 'react';
 import useSubscription, { Subscription } from './useSubscription';
 import IS_CLIENT from './utils/is-client';
 
-export interface FullscreenElement {
-  element: Element;
-}
-
-const SUBSCRIPTION: Subscription<FullscreenElement | undefined> = {
+const SUBSCRIPTION: Subscription<Element | undefined> = {
   read: () => {
     if (IS_CLIENT && document.fullscreenElement) {
-      return {
-        element: document.fullscreenElement,
-      };
+      return document.fullscreenElement;
     }
     return undefined;
   },
@@ -55,7 +49,7 @@ const SUBSCRIPTION: Subscription<FullscreenElement | undefined> = {
   },
 };
 
-export default function useWindowScroll(): FullscreenElement | undefined {
+export default function useFullscreenElement(): Element | undefined {
   const value = useSubscription(SUBSCRIPTION);
 
   useDebugValue(value);

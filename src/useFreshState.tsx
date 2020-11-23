@@ -22,7 +22,7 @@
  * SOFTWARE.
  *
  *
- * @author Lyon Software Technologies, Inc. 
+ * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
 import { useDebugValue } from 'react';
