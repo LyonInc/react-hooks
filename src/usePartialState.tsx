@@ -32,13 +32,13 @@ interface AnyObject {
   [key: string]: any;
 }
 
-type SetPartialState<T> = Dispatch<SetStateAction<T>>;
+export type SetPartialState<T extends AnyObject = AnyObject> = Dispatch<SetStateAction<T>>;
 
 function isActionFunc<T>(action: SetStateAction<T>): action is (prev: T) => T {
   return typeof action === 'function';
 }
 
-export default function usePartialState<T extends AnyObject>(
+export default function usePartialState<T extends AnyObject = AnyObject>(
   initialState: () => T,
 ): [T, SetPartialState<T>] {
   const [state, setState] = useState(initialState);
