@@ -14,7 +14,8 @@
     "type-check": "pridepack check",
     "lint": "pridepack lint",
     "test": "pridepack test",
-    "prepublish": "pridepack build"
+    "prepublish": "pridepack build",
+    "clean": "pridepack clean"
   },
   "license": "MIT",
   "name": "@lyonph/react-hooks",
