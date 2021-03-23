@@ -25,14 +25,13 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import useConstantCallback from './useConstantCallback';
-import useIsomorphicEffect from './useIsomorphicEffect';
 
 export default function useMountedState(): () => boolean {
   const alive = useRef(false);
 
-  useIsomorphicEffect(() => {
+  useEffect(() => {
     alive.current = true;
     return () => {
       alive.current = false;
