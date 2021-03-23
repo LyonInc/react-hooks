@@ -71,6 +71,7 @@ export default function useSubscription<T>({
 
     const readCurrent = () => {
       if (mounted) {
+        const nextValue = read();
         setState((prev) => {
           if (
             prev.read !== read
@@ -79,7 +80,6 @@ export default function useSubscription<T>({
           ) {
             return prev;
           }
-          const nextValue = read();
           if (!shouldUpdate(prev.value, nextValue)) {
             return prev;
           }
