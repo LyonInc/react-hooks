@@ -25,6 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2020
  */
+export { default as useAsyncMemo, AsyncMemoResult } from './useAsyncMemo';
 export { default as useCallbackCondition } from './useCallbackCondition';
 export { default as useConstant } from './useConstant';
 export { default as useConstantCallback } from './useConstantCallback';
