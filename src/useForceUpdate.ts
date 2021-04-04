@@ -31,5 +31,5 @@ import { useReducer } from 'react';
  * Returns a callback that force updates the component.
  */
 export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+  return useReducer(() => [], [])[1];
 }
