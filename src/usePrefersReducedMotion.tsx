@@ -28,5 +28,5 @@
 import useMediaQuery from './useMediaQuery';
 
 export default function usePrefersReducedMotion(): boolean {
-  return useMediaQuery('(prefers-color-motion)');
+  return useMediaQuery('(prefers-reduced-motion)');
 }
