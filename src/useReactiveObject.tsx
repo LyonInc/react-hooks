@@ -44,7 +44,7 @@ export default function useReactiveObject<T extends { [key: string]: any }>(
         Reflect.set(target, property, value, receiver);
         forceUpdate();
       }
-      return false;
+      return true;
     },
   }));
 }
