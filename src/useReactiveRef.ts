@@ -25,41 +25,20 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
+import { MutableRefObject } from 'react';
+import useConstant from './useConstant';
+import useForceUpdate from './useForceUpdate';
 
-import { useDebugValue } from 'react';
-import useSubscription, { Subscription } from './useSubscription';
-import IS_CLIENT from './utils/is-client';
+export default function useReactiveRef<T>(ref: MutableRefObject<T>): MutableRefObject<T> {
+  const forceUpdate = useForceUpdate();
 
-export interface WindowSize {
-  width: number;
-  height: number;
-}
-
-const SUBSCRIPTION: Subscription<WindowSize | undefined> = {
-  read: () => {
-    if (IS_CLIENT) {
-      return {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
-    }
-    return undefined;
-  },
-  subscribe: (callback) => {
-    if (IS_CLIENT) {
-      window.addEventListener('resize', callback, false);
-      return () => {
-        window.removeEventListener('resize', callback, false);
-      };
-    }
-    return undefined;
-  },
-};
-
-export default function useWindowSize(): WindowSize | undefined {
-  const value = useSubscription(SUBSCRIPTION);
-
-  useDebugValue(value);
-
-  return value;
+  return useConstant(() => ({
+    get current() {
+      return ref.current;
+    },
+    set current(value) {
+      ref.current = value;
+      forceUpdate();
+    },
+  }));
 }
