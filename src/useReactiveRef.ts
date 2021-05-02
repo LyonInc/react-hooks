@@ -25,14 +25,14 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useDebugValue } from 'react';
 import useConstant from './useConstant';
 import useForceUpdate from './useForceUpdate';
 
 export default function useReactiveRef<T>(ref: MutableRefObject<T>): MutableRefObject<T> {
   const forceUpdate = useForceUpdate();
 
-  return useConstant(() => ({
+  const proxyObject = useConstant(() => ({
     get current() {
       return ref.current;
     },
@@ -41,4 +41,8 @@ export default function useReactiveRef<T>(ref: MutableRefObject<T>): MutableRefO
       forceUpdate();
     },
   }));
+
+  useDebugValue(proxyObject);
+
+  return proxyObject;
 }

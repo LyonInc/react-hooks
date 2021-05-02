@@ -25,6 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
+import { useDebugValue } from 'react';
 import useConstant from './useConstant';
 import useForceUpdate from './useForceUpdate';
 
@@ -35,7 +36,7 @@ export default function useReactiveObject<T extends { [key: string]: any }>(
 
   const forceUpdate = useForceUpdate();
 
-  return useConstant(() => new Proxy(object, {
+  const proxyObject = useConstant(() => new Proxy(object, {
     get(target, property, handler) {
       return Reflect.get(target, property, handler);
     },
@@ -47,4 +48,8 @@ export default function useReactiveObject<T extends { [key: string]: any }>(
       return true;
     },
   }));
+
+  useDebugValue(proxyObject);
+
+  return proxyObject;
 }
