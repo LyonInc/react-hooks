@@ -86,7 +86,7 @@ export default function useAsyncMemo<S, R, F = any>(
     return () => {
       mounted = false;
     };
-  }, [request]);
+  }, [request, setState]);
 
   return state;
 }
