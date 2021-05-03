@@ -40,8 +40,10 @@ export default function useReactiveRef<T>(supplier: () => T): MutableRefObject<T
       return ref.current;
     },
     set current(value) {
-      ref.current = value;
-      forceUpdate();
+      if (!Object.is(value, ref.current)) {
+        ref.current = value;
+        forceUpdate();
+      }
     },
   }));
 
