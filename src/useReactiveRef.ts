@@ -28,9 +28,12 @@
 import { MutableRefObject, useDebugValue } from 'react';
 import useConstant from './useConstant';
 import useForceUpdate from './useForceUpdate';
+import useLazyRef from './useLazyRef';
 
-export default function useReactiveRef<T>(ref: MutableRefObject<T>): MutableRefObject<T> {
+export default function useReactiveRef<T>(supplier: () => T): MutableRefObject<T> {
   const forceUpdate = useForceUpdate();
+
+  const ref = useLazyRef(supplier);
 
   const proxyObject = useConstant(() => ({
     get current() {
