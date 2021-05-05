@@ -35,6 +35,7 @@ export { default as useConditionalEffect } from './useConditionalEffect';
 export { default as useConditionalLayoutEffect } from './useConditionalLayoutEffect';
 export { default as useConditionalMemo } from './useConditionalMemo';
 export { default as useDependencyChanged, ShouldUpdate, defaultCompare } from './useDependencyChanged';
+export { default as useDependencyVersion } from './useDependencyVersion';
 export { default as useForceUpdate } from './useForceUpdate';
 export { default as useFreshLazyRef } from './useFreshLazyRef';
 export { default as useFreshState } from './useFreshState';
