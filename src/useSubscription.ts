@@ -26,7 +26,7 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { useDebugValue, useEffect, useState } from 'react';
-import { MemoCompare, defaultCompare } from './useFreshLazyRef';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
 
 type ReadSource<T> = () => T;
 type Subscribe = (callback: () => void) => (() => void) | undefined | void;
@@ -34,7 +34,7 @@ type Subscribe = (callback: () => void) => (() => void) | undefined | void;
 export interface Subscription<T> {
   read: ReadSource<T>;
   subscribe: Subscribe;
-  shouldUpdate?: MemoCompare<T>;
+  shouldUpdate?: ShouldUpdate<T>;
 }
 
 export default function useSubscription<T>({

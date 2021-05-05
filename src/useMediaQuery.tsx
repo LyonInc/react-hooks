@@ -26,7 +26,7 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { useDebugValue } from 'react';
-import useMemoCondition from './useMemoCondition';
+import useConditionalMemo from './useConditionalMemo';
 import useSubscription from './useSubscription';
 import IS_CLIENT from './utils/is-client';
 
@@ -43,14 +43,14 @@ function getMediaMatcher(query: string): MediaQueryList {
 }
 
 export default function useMediaQuery(query: string): boolean {
-  const media = useMemoCondition(() => {
+  const media = useConditionalMemo(() => {
     if (IS_CLIENT) {
       return getMediaMatcher(query);
     }
     return undefined;
   }, query);
 
-  const subscription = useMemoCondition(() => ({
+  const subscription = useConditionalMemo(() => ({
     read: () => !!media?.matches,
     subscribe: (callback: () => void) => {
       if (media) {

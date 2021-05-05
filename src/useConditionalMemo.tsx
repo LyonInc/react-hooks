@@ -26,12 +26,13 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { useDebugValue } from 'react';
-import useFreshLazyRef, { defaultCompare, MemoCompare } from './useFreshLazyRef';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
+import useFreshLazyRef from './useFreshLazyRef';
 
-export default function useMemoCondition<T, R>(
+export default function useConditionalMemo<T, R>(
   supplier: () => T,
   dependency: R,
-  shouldUpdate: MemoCompare<R> = defaultCompare,
+  shouldUpdate: ShouldUpdate<R> = defaultCompare,
 ): T {
   const value = useFreshLazyRef(
     supplier,

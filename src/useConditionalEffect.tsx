@@ -26,13 +26,13 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { EffectCallback, useEffect } from 'react';
-import { defaultCompare, MemoCompare } from './useFreshLazyRef';
-import useMemoCondition from './useMemoCondition';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
+import useMemoCondition from './useConditionalMemo';
 
-export default function useEffectCondition<D>(
+export default function useConditionalEffect<D>(
   supplier: EffectCallback,
   dependency: D,
-  shouldUpdate: MemoCompare<D> = defaultCompare,
+  shouldUpdate: ShouldUpdate<D> = defaultCompare,
 ): void {
   const reference = useMemoCondition(() => [], dependency, shouldUpdate);
 

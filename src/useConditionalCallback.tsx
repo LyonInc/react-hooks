@@ -26,21 +26,20 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { useRef } from 'react';
-import { defaultCompare, MemoCompare } from './useFreshLazyRef';
+import useDependencyChanged, { defaultCompare, ShouldUpdate } from './useDependencyChanged';
 
 type AnyCallback = (...args: any[]) => any;
 
-export default function useCallbackCondition<T extends AnyCallback, R>(
+export default function useConditionalCallback<T extends AnyCallback, R>(
   supplier: T,
   dependency: R,
-  shouldUpdate: MemoCompare<R> = defaultCompare,
+  shouldUpdate: ShouldUpdate<R> = defaultCompare,
 ): T {
   const value = useRef(supplier);
-  const prevDeps = useRef(dependency);
+  const dependencyChanged = useDependencyChanged(dependency, shouldUpdate);
 
-  if (shouldUpdate(prevDeps.current, dependency)) {
+  if (dependencyChanged) {
     value.current = supplier;
-    prevDeps.current = dependency;
   }
 
   return value.current;

@@ -27,8 +27,9 @@
  */
 import { useDebugValue } from 'react';
 import useConstantCallback from './useConstantCallback';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
 import useForceUpdate from './useForceUpdate';
-import useFreshLazyRef, { defaultCompare, MemoCompare } from './useFreshLazyRef';
+import useFreshLazyRef from './useFreshLazyRef';
 import useMountedState from './useMountedState';
 
 export type RefreshStateInitialAction<T> = () => T;
@@ -53,7 +54,7 @@ function isRefreshStateAction<T>(
 export default function useFreshState<T, R>(
   initialState: RefreshStateInitial<T>,
   dependencies: R,
-  shouldUpdate: MemoCompare<R> = defaultCompare,
+  shouldUpdate: ShouldUpdate<R> = defaultCompare,
 ): [T, RefreshStateDispatch<T>] {
   const stateRef = useFreshLazyRef<T, R>(
     () => (

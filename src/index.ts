@@ -1,3 +1,5 @@
+import { ShouldUpdate } from './useDependencyChanged';
+
 /**
  * @license
  * MIT License
@@ -26,18 +28,20 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 export { default as useAsyncMemo, AsyncMemoResult } from './useAsyncMemo';
-export { default as useCallbackCondition } from './useCallbackCondition';
 export { default as useConstant } from './useConstant';
 export { default as useConstantCallback } from './useConstantCallback';
-export { default as useEffectCondition } from './useEffectCondition';
+export { default as useConditionalCallback } from './useConditionalCallback';
+export { default as useConditionalEffect } from './useConditionalEffect';
+export { default as useConditionalLayoutEffect } from './useConditionalLayoutEffect';
+export { default as useConditionalMemo } from './useConditionalMemo';
+export { default as useDependencyChanged, ShouldUpdate, defaultCompare } from './useDependencyChanged';
 export { default as useForceUpdate } from './useForceUpdate';
-export { default as useFreshLazyRef, MemoCompare } from './useFreshLazyRef';
+export { default as useFreshLazyRef } from './useFreshLazyRef';
 export { default as useFreshState } from './useFreshState';
 export { default as useFullscreenElement } from './useFullscreenElement';
 export { default as useIsomorphicEffect } from './useIsomorphicEffect';
 export { default as useLazyRef } from './useLazyRef';
 export { default as useMediaQuery } from './useMediaQuery';
-export { default as useMemoCondition } from './useMemoCondition';
 export { default as useMountedState } from './useMountedState';
 export { default as useOnlineStatus } from './useOnlineStatus';
 export { default as usePageVisibility } from './usePageVisibility';
@@ -52,3 +56,23 @@ export { default as useRenderCount } from './useRenderCount';
 export { default as useSubscription, Subscription } from './useSubscription';
 export { default as useWindowScroll, WindowScroll } from './useWindowScroll';
 export { default as useWindowSize, WindowSize } from './useWindowSize';
+
+/**
+ * @deprecated use useConditionalEffect
+ */
+export { default as useCallbackCondition } from './useConditionalCallback';
+
+/**
+ * @deprecated use useConditionalEffect
+ */
+export { default as useEffectCondition } from './useConditionalEffect';
+
+/**
+ * @deprecated use useConditionalEffect
+ */
+export { default as useMemoCondition } from './useConditionalMemo';
+
+/**
+ * @deprecated prefer to use ShouldUpdate<T>
+ */
+export type MemoCompare<T> = ShouldUpdate<T>;

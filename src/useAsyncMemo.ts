@@ -27,7 +27,7 @@
  */
 import { useEffect } from 'react';
 import { defaultCompare, MemoCompare } from './useFreshLazyRef';
-import useCallbackCondition from './useCallbackCondition';
+import useCallbackCondition from './useConditionalCallback';
 import useFreshState from './useFreshState';
 
 interface Pending {

@@ -25,21 +25,17 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
-import { MutableRefObject } from 'react';
-import useDependencyChanged, { defaultCompare, ShouldUpdate } from './useDependencyChanged';
-import useLazyRef from './useLazyRef';
+import { EffectCallback, useLayoutEffect } from 'react';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
+import useMemoCondition from './useConditionalMemo';
 
-export default function useFreshLazyRef<T, R>(
-  supplier: () => T,
-  dependency: R,
-  shouldUpdate: ShouldUpdate<R> = defaultCompare,
-): MutableRefObject<T> {
-  const value = useLazyRef(supplier);
-  const dependencyChanged = useDependencyChanged(dependency, shouldUpdate);
+export default function useConditionalLayoutEffect<D>(
+  supplier: EffectCallback,
+  dependency: D,
+  shouldUpdate: ShouldUpdate<D> = defaultCompare,
+): void {
+  const reference = useMemoCondition(() => [], dependency, shouldUpdate);
 
-  if (dependencyChanged) {
-    value.current = supplier();
-  }
-
-  return value;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(supplier, [reference]);
 }
