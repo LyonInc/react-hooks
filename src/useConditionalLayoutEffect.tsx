@@ -27,15 +27,15 @@
  */
 import { EffectCallback, useLayoutEffect } from 'react';
 import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
-import useConditionalMemo from './useConditionalMemo';
+import { useDependencyVersion } from '.';
 
 export default function useConditionalLayoutEffect<D>(
   supplier: EffectCallback,
   dependency: D,
   shouldUpdate: ShouldUpdate<D> = defaultCompare,
 ): void {
-  const reference = useConditionalMemo(() => [], dependency, shouldUpdate);
+  const version = useDependencyVersion(dependency, shouldUpdate);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(supplier, [reference]);
+  useLayoutEffect(supplier, [version]);
 }
