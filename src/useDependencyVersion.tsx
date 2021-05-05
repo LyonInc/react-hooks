@@ -25,7 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
-import { useRef } from 'react';
+import { useDebugValue, useRef } from 'react';
 import useDependencyChanged, { defaultCompare, ShouldUpdate } from './useDependencyChanged';
 
 export default function useDependencyVersion<R>(
@@ -38,6 +38,8 @@ export default function useDependencyVersion<R>(
   if (dependencyChanged) {
     version.current += 1;
   }
+
+  useDebugValue(version.current);
 
   return version.current;
 }

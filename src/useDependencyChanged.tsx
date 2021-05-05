@@ -25,7 +25,7 @@
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
-import { useRef } from 'react';
+import { useDebugValue, useRef } from 'react';
 
 export function defaultCompare<R>(a: R, b: R): boolean {
   return !Object.is(a, b);
@@ -44,6 +44,8 @@ export default function useDependencyChanged<R>(
   if (result) {
     prevDeps.current = dependency;
   }
+
+  useDebugValue(result);
 
   return result;
 }
