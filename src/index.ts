@@ -1,5 +1,3 @@
-import { ShouldUpdate } from './useDependencyChanged';
-
 /**
  * @license
  * MIT License
@@ -27,6 +25,8 @@ import { ShouldUpdate } from './useDependencyChanged';
  * @author Lyon Software Technologies, Inc.
  * @copyright Lyon Software Technologies, Inc. 2021
  */
+import { ShouldUpdate } from './useDependencyChanged';
+
 export { default as useAsyncMemo, AsyncMemoResult } from './useAsyncMemo';
 export { default as useConstant } from './useConstant';
 export { default as useConstantCallback } from './useConstantCallback';

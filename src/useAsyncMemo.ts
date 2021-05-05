@@ -26,8 +26,8 @@
  * @copyright Lyon Software Technologies, Inc. 2021
  */
 import { useEffect } from 'react';
-import { defaultCompare, MemoCompare } from './useFreshLazyRef';
-import useCallbackCondition from './useConditionalCallback';
+import useConditionalCallback from './useConditionalCallback';
+import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
 import useFreshState from './useFreshState';
 
 interface Pending {
@@ -52,7 +52,7 @@ export type AsyncMemoResult<S, F = any> =
 export default function useAsyncMemo<S, R, F = any>(
   supplier: () => Promise<S>,
   dependency: R,
-  shouldUpdate: MemoCompare<R> = defaultCompare,
+  shouldUpdate: ShouldUpdate<R> = defaultCompare,
 ): AsyncMemoResult<S, F> {
   const [state, setState] = useFreshState<AsyncMemoResult<S, F>, R>(
     () => ({
@@ -62,7 +62,7 @@ export default function useAsyncMemo<S, R, F = any>(
     shouldUpdate,
   );
 
-  const request = useCallbackCondition(supplier, dependency, shouldUpdate);
+  const request = useConditionalCallback(supplier, dependency, shouldUpdate);
 
   useEffect(() => {
     let mounted = true;

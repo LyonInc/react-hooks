@@ -27,14 +27,14 @@
  */
 import { EffectCallback, useEffect } from 'react';
 import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
-import useMemoCondition from './useConditionalMemo';
+import useConditionalMemo from './useConditionalMemo';
 
 export default function useConditionalEffect<D>(
   supplier: EffectCallback,
   dependency: D,
   shouldUpdate: ShouldUpdate<D> = defaultCompare,
 ): void {
-  const reference = useMemoCondition(() => [], dependency, shouldUpdate);
+  const reference = useConditionalMemo(() => [], dependency, shouldUpdate);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(supplier, [reference]);
