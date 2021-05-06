@@ -27,7 +27,7 @@
  */
 import { EffectCallback, useLayoutEffect } from 'react';
 import { defaultCompare, ShouldUpdate } from './useDependencyChanged';
-import { useDependencyVersion } from '.';
+import useDependencyVersion from './useDependencyVersion';
 
 export default function useConditionalLayoutEffect<D>(
   supplier: EffectCallback,
